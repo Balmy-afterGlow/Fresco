@@ -1,0 +1,5 @@
+Dataset/
+.mypy_cache/
+__pycache__/
+results/
+fresco_model.h5
