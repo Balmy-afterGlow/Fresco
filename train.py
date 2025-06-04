@@ -7,6 +7,9 @@ from utils import num_of_classes, create_df
 from constant import train_dir, test_dir, validation_dir
 
 
+"""数据集探索与分析"""
+# 了解数据集的基本情况
+# 创建方便机器学习处理的数据结构
 num_of_classes(train_dir, "train")
 num_of_classes(test_dir, "test")
 num_of_classes(validation_dir, "validation")
@@ -21,6 +24,10 @@ validation_df = create_df(validation_dir)
 print(f"训练集总图像数 : {len(train_df)}")
 print(f"验证集总图像数 : {len(validation_df)}")
 
+
+"""数据增强与预处理"""
+# 标准化像素值到[0, 1]范围
+# 通过认为增加训练样本多样性（数据增强），防止过拟合
 train_datagen = ImageDataGenerator(
     rescale=1.0 / 255,  # 对图像进行缩放，将像素值标准化到一个较小的范围
     rotation_range=20,  # 随机旋转图像的角度范围，最多旋转 20 度
@@ -59,6 +66,11 @@ validation_generator = validation_datagen.flow_from_dataframe(
     shuffle=False,
 )
 
+"""模型架构定义"""
+# 构建能够提取图像特征的层次结构
+# 卷积层提取局部特征，池化层减少参数和抗干扰
+# 全连接层整合特征用以分类
+# 输出层使用softmax将结构转化为概率分布
 
 # 创建深度卷积神经网络模型
 model = Sequential(
@@ -73,6 +85,11 @@ model = Sequential(
     ]
 )
 
+"""模型编译"""
+# 设置优化器（Adam）
+# 定义损失函数（categorical_crossentropy）
+# 指定评估指标（accuracy）
+
 # 编译模型
 # model.compile(
 #     optimizer=Adam(lr=0.001), loss="binary_crossentropy", metrics=["accuracy"]
@@ -84,14 +101,21 @@ model.compile(
     metrics=["accuracy"],
 )
 
+"""模型训练"""
+# 迭代训练数据，调整模型权重
+# 每个周期验证模型性能
+
 # 训练模型
 history = model.fit(
     train_generator,
     steps_per_epoch=100,
-    epochs=10,
+    epochs=20,
     validation_data=validation_generator,
     validation_steps=50,
 )
+
+"""模型保存"""
+# 存储训练好的模型，避免重复训练
 
 # 保存模型
 model.save("fresco_model.h5")

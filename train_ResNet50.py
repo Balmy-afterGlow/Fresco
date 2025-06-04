@@ -31,6 +31,8 @@ data_path = "/home/moyu/Code/Project/Fresco/Dataset"
 explore_data(data_path)
 
 
+"""数据变换和增强"""
+
 # Define transforms
 train_transform = transforms.Compose(
     [
@@ -57,22 +59,25 @@ val_transform = transforms.Compose(
     ]
 )
 
+"""数据集加载"""
 
 # Create datasets and show augmentations
 train_dataset = FruitVegDataset(data_path, "train", train_transform)
 show_augmentations(train_dataset, train_transform)
 
+train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True, num_workers=2)
+val_dataset = FruitVegDataset(data_path, "validation", val_transform)
+val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False, num_workers=2)
+
+
+"""模型初始化"""
 
 # Initialize model and visualize feature maps
 model = FruitVegCNN(num_classes=len(train_dataset.classes)).to(device)
 sample_image, _ = train_dataset[0]
 visualize_feature_maps(model, device, sample_image)
 
-
-# Create data loaders
-train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True, num_workers=2)
-val_dataset = FruitVegDataset(data_path, "validation", val_transform)
-val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False, num_workers=2)
+"""训练组件配置"""
 
 # Training setup
 criterion = nn.CrossEntropyLoss()
@@ -87,6 +92,8 @@ best_val_acc = 0
 history: dict = {"train_loss": [], "train_acc": [], "val_loss": [], "val_acc": []}
 
 print("\nStarting training...")
+
+"""训练循环"""
 
 for epoch in range(num_epochs):
     print(f"\nEpoch {epoch + 1}/{num_epochs}")
