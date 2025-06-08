@@ -6,11 +6,13 @@ from torch.cuda.amp import autocast, GradScaler
 from torch.utils.data import DataLoader
 from torchvision import transforms
 from tqdm import tqdm
-from utils_ResNet50 import (
+from utils_ResNet50_enhance import (
     set_seed,
     FruitVegDataset,
+    OptimizedConfig,
+    OptimizedCNN,
+    plot_optimized_results,
 )
-from utils_ResNet50_enhance import OptimizedConfig, OptimizedCNN, plot_optimized_results
 
 
 set_seed()

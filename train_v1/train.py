@@ -109,7 +109,7 @@ model.compile(
 history = model.fit(
     train_generator,
     steps_per_epoch=100,
-    epochs=20,
+    epochs=30,
     validation_data=validation_generator,
     validation_steps=50,
 )
