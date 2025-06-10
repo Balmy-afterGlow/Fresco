@@ -13,127 +13,222 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8fafc;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             padding: 20px;
+            color: #1a202c;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
+        /* 添加一些装饰性的背景元素 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 200, 255, 0.1) 0%, transparent 50%);
+            z-index: -1;
         }
 
         .header {
-            background: linear-gradient(45deg, #2196F3, #21CBF3);
-            color: white;
-            padding: 30px;
             text-align: center;
+            margin-bottom: 50px;
         }
 
         .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
+            font-size: 4em;
+            margin-bottom: 20px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -2px;
         }
 
         .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
+            font-size: 1.4em;
+            color: #64748b;
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
         }
 
-        .upload-section {
-            padding: 40px;
-            text-align: center;
-        }
-
-        .upload-methods {
-            display: flex;
-            gap: 30px;
-            justify-content: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-
-        .upload-method {
-            flex: 1;
-            min-width: 300px;
-            padding: 30px;
-            border: 2px dashed #ccc;
-            border-radius: 10px;
-            background: #f9f9f9;
-            transition: all 0.3s ease;
-        }
-
-        .upload-method:hover {
-            border-color: #2196F3;
-            background: #f0f8ff;
-        }
-
-        .upload-method h3 {
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 1.3em;
-        }
-
-        .file-input-wrapper {
+        .upload-container {
+            background: white;
+            border-radius: 24px;
+            box-shadow:
+                0 25px 50px -12px rgba(0, 0, 0, 0.08),
+                0 0 0 1px rgba(0, 0, 0, 0.02);
+            padding: 50px;
+            max-width: 900px;
+            width: 100%;
             position: relative;
-            display: inline-block;
-            cursor: pointer;
-            background: #2196F3;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 25px;
-            transition: background 0.3s ease;
-            margin-top: 10px;
+            overflow: hidden;
         }
 
-        .file-input-wrapper:hover {
-            background: #1976D2;
-        }
-
-        .file-input-wrapper input[type=file] {
+        .upload-container::before {
+            content: '';
             position: absolute;
-            left: -9999px;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c);
+        }
+
+        .drop-zone {
+            border: 3px dashed #e2e8f0;
+            border-radius: 20px;
+            padding: 80px 40px;
+            text-align: center;
+            background: #fafbfc;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .drop-zone:hover {
+            border-color: #667eea;
+            background: #f1f5f9;
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .drop-zone.dragover {
+            border-color: #10b981;
+            background: #f0fdf4;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.02);
+            }
+        }
+
+        .upload-icon {
+            font-size: 5em;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+            opacity: 0.6;
+        }
+
+        .drop-zone:hover .upload-icon {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+
+        .upload-text {
+            font-size: 1.8em;
+            color: #374151;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .upload-hint {
+            font-size: 1.1em;
+            color: #6b7280;
+            margin-bottom: 35px;
+            line-height: 1.5;
+        }
+
+        .file-input {
+            display: none;
         }
 
         .upload-btn {
-            background: #4CAF50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: 15px 30px;
-            border-radius: 25px;
-            font-size: 1.1em;
+            padding: 18px 50px;
+            border-radius: 50px;
+            font-size: 1.3em;
             cursor: pointer;
-            transition: background 0.3s ease;
-            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
         .upload-btn:hover {
-            background: #45a049;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
         }
 
         .upload-btn:disabled {
-            background: #ccc;
+            background: #d1d5db;
             cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .selected-files {
+            margin-top: 30px;
+            padding: 25px;
+            background: #f8fafc;
+            border-radius: 16px;
+            display: none;
+            border: 1px solid #e2e8f0;
+        }
+
+        .selected-files h4 {
+            color: #374151;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .file-list {
+            list-style: none;
+            color: #6b7280;
+        }
+
+        .file-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 1em;
+        }
+
+        .file-list li:last-child {
+            border-bottom: none;
         }
 
         .loading {
             display: none;
-            margin: 20px 0;
+            margin: 40px 0;
+            text-align: center;
         }
 
         .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid #667eea;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 60px;
+            height: 60px;
             animation: spin 1s linear infinite;
-            margin: 0 auto;
+            margin: 0 auto 20px;
         }
 
         @keyframes spin {
@@ -146,51 +241,86 @@
             }
         }
 
-        .results-section {
-            padding: 20px 40px 40px;
+        .loading-text {
+            color: #6b7280;
+            font-size: 1.2em;
+            font-weight: 500;
+        }
+
+        .results-container {
+            margin-top: 60px;
+            max-width: 1400px;
+            width: 100%;
             display: none;
+        }
+
+        .results-section {
+            background: white;
+            border-radius: 24px;
+            box-shadow:
+                0 25px 50px -12px rgba(0, 0, 0, 0.08),
+                0 0 0 1px rgba(0, 0, 0, 0.02);
+            padding: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .results-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #10b981, #059669, #047857, #065f46);
         }
 
         .results-title {
             text-align: center;
-            color: #333;
-            font-size: 2em;
-            margin-bottom: 30px;
+            color: #1f2937;
+            font-size: 2.8em;
+            margin-bottom: 40px;
+            font-weight: 700;
+            letter-spacing: -1px;
         }
 
         .results-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 35px;
         }
 
         .result-card {
             background: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
             overflow: hidden;
-            transition: transform 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #f1f5f9;
         }
 
         .result-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
         }
 
         .result-image {
             width: 100%;
-            height: 200px;
+            height: 220px;
             object-fit: cover;
         }
 
         .result-content {
-            padding: 20px;
+            padding: 25px;
         }
 
         .result-filename {
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 15px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 20px;
             word-break: break-all;
+            font-size: 1.1em;
+            line-height: 1.4;
         }
 
         .predictions {
@@ -201,150 +331,283 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px solid #eee;
+            padding: 12px 0;
+            border-bottom: 1px solid #f3f4f6;
+            transition: all 0.2s ease;
+            position: relative;
         }
 
         .prediction-item:last-child {
             border-bottom: none;
         }
 
+        .prediction-item:hover {
+            background: #f8fafc;
+            margin: 0 -8px;
+            padding-left: 8px;
+            padding-right: 8px;
+            border-radius: 8px;
+        }
+
+        /* 最高概率的预测项特殊样式 */
+        .prediction-item.top-prediction {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin: 0 -8px 12px -8px;
+            border: 2px solid #0ea5e9;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
+        }
+
+        .prediction-item.top-prediction::before {
+            content: '👑 最佳匹配';
+            position: absolute;
+            right: 10px;
+            top: -12px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+            z-index: 10;
+            /* 提高z-index确保标签始终在顶部 */
+            transform: translateY(0);
+            /* 确保不受其他变换影响 */
+        }
+
+        .prediction-item.top-prediction .prediction-class {
+            font-weight: 800;
+            color: #0c4a6e;
+            font-size: 1.2em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .prediction-item.top-prediction .prediction-probability {
+            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            font-size: 1.1em;
+            font-weight: 800;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
+            padding: 10px 18px;
+            letter-spacing: 0.5px;
+        }
+
         .prediction-class {
-            font-weight: 500;
-            color: #333;
+            font-weight: 600;
+            color: #374151;
+            text-transform: capitalize;
+            font-size: 1em;
         }
 
         .prediction-probability {
-            background: linear-gradient(45deg, #2196F3, #21CBF3);
+            background: linear-gradient(135deg, #6b7280, #4b5563);
             color: white;
-            padding: 4px 8px;
-            border-radius: 12px;
+            padding: 8px 16px;
+            border-radius: 20px;
             font-size: 0.9em;
+            font-weight: 600;
+            letter-spacing: 0.3px;
         }
 
         .error-message {
-            background: #f44336;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
             color: white;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 20px 0;
+            padding: 25px;
+            border-radius: 16px;
+            margin: 25px 0;
             display: none;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
         }
 
         .success-message {
-            background: #4CAF50;
+            background: linear-gradient(135deg, #10b981, #059669);
             color: white;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 20px 0;
+            padding: 25px;
+            border-radius: 16px;
+            margin: 25px 0;
             display: none;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
         }
 
         @media (max-width: 768px) {
-            .upload-methods {
-                flex-direction: column;
+            .header h1 {
+                font-size: 2.8em;
+            }
+
+            .header p {
+                font-size: 1.2em;
+            }
+
+            .upload-container {
+                margin: 10px;
+                padding: 35px 25px;
+            }
+
+            .drop-zone {
+                padding: 60px 25px;
+                min-height: 280px;
+            }
+
+            .upload-icon {
+                font-size: 4em;
+            }
+
+            .upload-text {
+                font-size: 1.5em;
             }
 
             .results-grid {
                 grid-template-columns: 1fr;
             }
 
-            .container {
-                margin: 10px;
-            }
-
-            .upload-section {
-                padding: 20px;
+            .results-section {
+                padding: 35px 25px;
             }
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🍎 水果蔬菜分类器</h1>
-            <p>上传图片，AI自动识别水果和蔬菜类型</p>
+    <div class="header">
+        <h1>🍎 水果蔬菜分类器</h1>
+        <p>拖拽或点击上传图片，AI智能识别水果蔬菜类型</p>
+    </div>
+
+    <div class="upload-container">
+        <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+            <div class="upload-icon">📁</div>
+            <div class="upload-text">点击选择文件或拖拽到此处</div>
+            <div class="upload-hint">支持图片文件、ZIP压缩包，可批量上传<br>自动递归查找压缩包内的所有图片</div>
+            <button class="upload-btn" type="button">选择文件</button>
+            <input type="file" id="fileInput" class="file-input" multiple accept="image/*,.zip">
         </div>
 
-        <div class="upload-section">
-            <div class="upload-methods">
-                <div class="upload-method">
-                    <h3>📁 批量上传图片</h3>
-                    <p>选择多个图片文件进行批量分类</p>
-                    <div class="file-input-wrapper">
-                        <input type="file" id="imageFiles" multiple accept="image/*">
-                        <span>选择图片文件</span>
-                    </div>
-                </div>
-
-                <div class="upload-method">
-                    <h3>📦 上传ZIP压缩包</h3>
-                    <p>上传包含图片的ZIP文件</p>
-                    <div class="file-input-wrapper">
-                        <input type="file" id="zipFile" accept=".zip">
-                        <span>选择ZIP文件</span>
-                    </div>
-                </div>
-            </div>
-
-            <button class="upload-btn" onclick="uploadFiles()">开始分类</button>
-
-            <div class="loading">
-                <div class="spinner"></div>
-                <p>正在处理图片，请稍候...</p>
-            </div>
-
-            <div class="error-message" id="errorMessage"></div>
-            <div class="success-message" id="successMessage"></div>
+        <div class="selected-files" id="selectedFiles">
+            <h4>已选择的文件：</h4>
+            <ul class="file-list" id="fileList"></ul>
         </div>
 
-        <div class="results-section" id="resultsSection">
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <div class="loading-text">正在处理图片，请稍候...</div>
+        </div>
+
+        <div class="error-message" id="errorMessage"></div>
+        <div class="success-message" id="successMessage"></div>
+    </div>
+
+    <div class="results-container" id="resultsContainer">
+        <div class="results-section">
             <h2 class="results-title">分类结果</h2>
             <div class="results-grid" id="resultsGrid"></div>
         </div>
     </div>
 
     <script>
-        function showLoading(show) {
-            const loading = document.querySelector('.loading');
-            const uploadBtn = document.querySelector('.upload-btn');
+        let selectedFiles = [];
 
+        // 获取DOM元素
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const selectedFilesDiv = document.getElementById('selectedFiles');
+        const fileList = document.getElementById('fileList');
+        const loading = document.getElementById('loading');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const resultsGrid = document.getElementById('resultsGrid');
+
+        // 拖拽事件处理
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            if (!dropZone.contains(e.relatedTarget)) {
+                dropZone.classList.remove('dragover');
+            }
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+
+            const files = Array.from(e.dataTransfer.files);
+            handleFiles(files);
+        });
+
+        // 文件选择事件处理
+        fileInput.addEventListener('change', (e) => {
+            const files = Array.from(e.target.files);
+            handleFiles(files);
+        });
+
+        // 处理选择的文件
+        function handleFiles(files) {
+            selectedFiles = files;
+            displaySelectedFiles();
+
+            if (files.length > 0) {
+                // 自动开始上传
+                setTimeout(() => {
+                    uploadFiles();
+                }, 500);
+            }
+        }
+
+        // 显示选择的文件
+        function displaySelectedFiles() {
+            if (selectedFiles.length === 0) {
+                selectedFilesDiv.style.display = 'none';
+                return;
+            }
+
+            const fileNames = selectedFiles.map(file => file.name);
+            fileList.innerHTML = fileNames.map(name => `<li>${name}</li>`).join('');
+            selectedFilesDiv.style.display = 'block';
+        }
+
+        // 显示加载状态
+        function showLoading(show) {
             if (show) {
                 loading.style.display = 'block';
-                uploadBtn.disabled = true;
-                uploadBtn.textContent = '处理中...';
             } else {
                 loading.style.display = 'none';
-                uploadBtn.disabled = false;
-                uploadBtn.textContent = '开始分类';
             }
         }
 
+        // 显示消息
         function showMessage(message, isError = false) {
-            const errorDiv = document.getElementById('errorMessage');
-            const successDiv = document.getElementById('successMessage');
+            hideMessages();
 
             if (isError) {
-                errorDiv.textContent = message;
-                errorDiv.style.display = 'block';
-                successDiv.style.display = 'none';
+                errorMessage.textContent = message;
+                errorMessage.style.display = 'block';
             } else {
-                successDiv.textContent = message;
-                successDiv.style.display = 'block';
-                errorDiv.style.display = 'none';
+                successMessage.textContent = message;
+                successMessage.style.display = 'block';
             }
 
-            setTimeout(() => {
-                errorDiv.style.display = 'none';
-                successDiv.style.display = 'none';
-            }, 5000);
+            setTimeout(hideMessages, 5000);
         }
 
-        function displayResults(results) {
-            const resultsSection = document.getElementById('resultsSection');
-            const resultsGrid = document.getElementById('resultsGrid');
+        function hideMessages() {
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+        }
 
+        // 显示结果
+        function displayResults(results) {
             resultsGrid.innerHTML = '';
 
             if (results.length === 0) {
@@ -356,12 +619,15 @@
                 const card = document.createElement('div');
                 card.className = 'result-card';
 
-                const predictionsHtml = result.predictions.map(pred =>
-                    `<li class="prediction-item">
+                const predictionsHtml = result.predictions.map((pred, index) => {
+                    const isTopPrediction = index === 0; // 第一个是最高概率
+                    const itemClass = isTopPrediction ? 'prediction-item top-prediction' : 'prediction-item';
+
+                    return `<li class="${itemClass}">
                         <span class="prediction-class">${pred.class}</span>
                         <span class="prediction-probability">${pred.probability.toFixed(1)}%</span>
-                    </li>`
-                ).join('');
+                    </li>`;
+                }).join('');
 
                 card.innerHTML = `
                     <img src="data:image/jpeg;base64,${result.image}" alt="${result.filename}" class="result-image">
@@ -376,53 +642,63 @@
                 resultsGrid.appendChild(card);
             });
 
-            resultsSection.style.display = 'block';
-            resultsSection.scrollIntoView({ behavior: 'smooth' });
-            showMessage(`成功处理 ${results.length} 张图片`);
+            resultsContainer.style.display = 'block';
+            resultsContainer.scrollIntoView({ behavior: 'smooth' });
+            showMessage(`🎉 成功处理 ${results.length} 张图片！`);
         }
 
+        // 上传文件
         async function uploadFiles() {
-            const imageFiles = document.getElementById('imageFiles').files;
-            const zipFile = document.getElementById('zipFile').files[0];
-
-            if (imageFiles.length === 0 && !zipFile) {
+            if (selectedFiles.length === 0) {
                 showMessage('请选择要上传的文件', true);
                 return;
             }
 
             showLoading(true);
+            hideMessages();
 
             try {
-                let response;
+                const formData = new FormData();
+
+                // 检查是否是ZIP文件
+                const zipFile = selectedFiles.find(file => file.name.toLowerCase().endsWith('.zip'));
 
                 if (zipFile) {
-                    // Upload ZIP file
-                    const formData = new FormData();
+                    // 上传ZIP文件
                     formData.append('zipfile', zipFile);
 
-                    response = await fetch('/upload_zip', {
+                    const response = await fetch('/upload_zip', {
                         method: 'POST',
                         body: formData
                     });
-                } else {
-                    // Upload individual images
-                    const formData = new FormData();
-                    for (let file of imageFiles) {
-                        formData.append('files', file);
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        displayResults(data.results);
+                    } else {
+                        showMessage(data.error || '上传失败', true);
                     }
+                } else {
+                    // 上传图片文件
+                    selectedFiles.forEach(file => {
+                        if (file.type.startsWith('image/')) {
+                            formData.append('files', file);
+                        }
+                    });
 
-                    response = await fetch('/upload', {
+                    const response = await fetch('/upload', {
                         method: 'POST',
                         body: formData
                     });
-                }
 
-                const data = await response.json();
+                    const data = await response.json();
 
-                if (response.ok) {
-                    displayResults(data.results);
-                } else {
-                    showMessage(data.error || '上传失败', true);
+                    if (response.ok) {
+                        displayResults(data.results);
+                    } else {
+                        showMessage(data.error || '上传失败', true);
+                    }
                 }
             } catch (error) {
                 showMessage('网络错误：' + error.message, true);
@@ -431,33 +707,9 @@
             }
         }
 
-        // File input change handlers to show selected files
-        document.getElementById('imageFiles').addEventListener('change', function (e) {
-            const wrapper = this.parentElement;
-            const span = wrapper.querySelector('span');
-            const fileCount = e.target.files.length;
-
-            if (fileCount > 0) {
-                span.textContent = `已选择 ${fileCount} 个文件`;
-                document.getElementById('zipFile').value = ''; // Clear zip file selection
-                document.getElementById('zipFile').parentElement.querySelector('span').textContent = '选择ZIP文件';
-            } else {
-                span.textContent = '选择图片文件';
-            }
-        });
-
-        document.getElementById('zipFile').addEventListener('change', function (e) {
-            const wrapper = this.parentElement;
-            const span = wrapper.querySelector('span');
-
-            if (e.target.files.length > 0) {
-                span.textContent = `已选择: ${e.target.files[0].name}`;
-                document.getElementById('imageFiles').value = ''; // Clear image files selection
-                document.getElementById('imageFiles').parentElement.querySelector('span').textContent = '选择图片文件';
-            } else {
-                span.textContent = '选择ZIP文件';
-            }
-        });
+        // 阻止默认的拖拽行为
+        document.addEventListener('dragover', (e) => e.preventDefault());
+        document.addEventListener('drop', (e) => e.preventDefault());
     </script>
 </body>
 

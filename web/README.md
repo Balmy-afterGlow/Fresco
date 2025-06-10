@@ -22,9 +22,8 @@ pip install -r requirements.txt
 ### 2. 确保模型文件存在
 
 确保以下路径之一存在模型文件：
-- `/home/moyu/Code/Project/Fresco/best_model.pth`
-- `/home/moyu/Code/Project/Fresco/optimized_model.pth`
-- `/home/moyu/Code/Project/Fresco/train_v3/optimized_model.pth`
+- `Path/to/Project/Fresco/best_model.pth`
+- `Path/to/Project/Fresco/train_v3/optimized_model.pth`
 
 ### 3. 启动服务器
 
