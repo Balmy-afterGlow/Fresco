@@ -15,7 +15,6 @@
 ### 1. 安装依赖
 
 ```bash
-cd /home/moyu/Code/Project/Fresco/web
 pip install -r requirements.txt
 ```
 
