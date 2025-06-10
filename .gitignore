@@ -5,3 +5,5 @@ results/
 fresco_model.h5
 optimized_model.pth
 optimized_results.png
+best_model.pth
+latest_checkpoint.pth
