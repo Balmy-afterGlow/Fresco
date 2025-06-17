@@ -30,11 +30,25 @@ def load_model():
     """Load the trained model"""
     global model, classes
     try:
-        # 设置模型路径优先级
-        model_path = "/home/moyu/Code/Project/Fresco/train_v3/optimized_model.pth"
+        # 设置模型路径优先级列表
+        base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        model_paths = [
+            os.path.join(base_path, "train_v3", "optimized_model.pth"),
+            os.path.join(base_path, "best_model.pth"),
+            os.path.join(base_path, "latest_checkpoint.pth"),
+        ]
 
-        if not os.path.exists(model_path):
-            raise FileNotFoundError(f"模型文件不存在: {model_path}")
+        model_path = None
+        for path in model_paths:
+            if os.path.exists(path):
+                model_path = path
+                break
+
+        if model_path is None:
+            raise FileNotFoundError(
+                "未找到任何可用的模型文件。请确保以下路径之一存在模型文件:\n"
+                + "\n".join(f"  - {path}" for path in model_paths)
+            )
 
         print(f"正在加载模型: {model_path}")
         # 使用map_location='cpu'以确保在没有GPU的环境中也能运行
@@ -65,8 +79,52 @@ def load_model():
             # 如果JIT失败，我们仍然可以使用未优化的模型
 
         # 加载类别名称
-        dataset_path = "/home/moyu/Code/Project/Fresco/Dataset/train"
-        classes = sorted(os.listdir(dataset_path))
+        base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        dataset_path = os.path.join(base_path, "Dataset", "train")
+
+        if os.path.exists(dataset_path):
+            classes = sorted(os.listdir(dataset_path))
+        else:
+            # 如果数据集路径不存在，使用预定义的类别列表
+            classes = [
+                "apple",
+                "banana",
+                "beetroot",
+                "bell pepper",
+                "cabbage",
+                "capsicum",
+                "carrot",
+                "cauliflower",
+                "chilli pepper",
+                "corn",
+                "cucumber",
+                "eggplant",
+                "garlic",
+                "ginger",
+                "grapes",
+                "jalepeno",
+                "kiwi",
+                "lemon",
+                "lettuce",
+                "mango",
+                "onion",
+                "orange",
+                "paprika",
+                "pear",
+                "peas",
+                "pineapple",
+                "pomegranate",
+                "potato",
+                "raddish",
+                "soy beans",
+                "spinach",
+                "sweetcorn",
+                "sweetpotato",
+                "tomato",
+                "turnip",
+                "watermelon",
+            ]
+            print("⚠️ 数据集路径不存在，使用预定义类别列表")
 
         print("模型加载成功!")
         print(f"类别数量: {len(classes)}")
